@@ -1,0 +1,217 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project.View"
+        xmlns:ViewModel="clr-namespace:mini-project.viewmodel" x:Class="Project.View.Gestion"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="600">
+
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Grid.Column" Value="1"/>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+
+    <TabControl>
+        <TabItem Header="Gestion des voitures">
+            <TabItem.DataContext>
+                <ViewModel:VoitureViewModel/>
+            </TabItem.DataContext>
+            <TabControl>
+                <TabItem Header="Ajout Voiture">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Matricule Voiture"/>
+                        <TextBox Text="{Binding MatVoiture}">
+                        </TextBox>
+                        <Label Content="Marque" Grid.Row="1"/>
+                        <TextBox Grid.Row="1" Text="{Binding MarqueVoiture}"/>
+                        <Label Content="Puissance" Grid.Row="2"/>
+                        <TextBox Grid.Row="2" Text="{Binding PuissVoiture}"/>
+                        <Label Content="Date" Grid.Row="3"/>
+                        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding DateVoiture}"/>
+                        <Label Content="Etat" Grid.Row="4"/>
+                        <TextBox Grid.Row="4" Text="{Binding EtatVoiture}"/>
+
+                        <UniformGrid Columns="2" Grid.ColumnSpan="2" Grid.Row="5">
+                            <Button Content="Ajouter" Command="{Binding AjouterCommand}"/>
+                            <Button Content="Effacer" Grid.Column="1" Command="{Binding EffacerCommand}"/>
+
+                        </UniformGrid>
+                        <DataGrid Grid.Row="6" Grid.ColumnSpan="2" ItemsSource="{Binding ListeVoitures}" />
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Mise à jour Voitures">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="dgVoitures" Grid.ColumnSpan="2" ItemsSource="{Binding ListeVoitures}"/>
+                        <Label Content="Matricule Voiture" Grid.Row="1"/>
+                        <TextBox x:Name="txtMat" Grid.Row="1" Text="{Binding MatVoiture,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Marque" Grid.Row="2"/>
+                        <TextBox Grid.Row="2" Text="{Binding MarqueVoiture,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Puissance" Grid.Row="3"/>
+                        <TextBox Grid.Row="3" Text="{Binding PuissVoiture,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Date" Grid.Row="4"/>
+                        <TextBox Grid.Row="4" Text="{Binding DateVoiture,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Etat" Grid.Row="5"/>
+                        <TextBox Grid.Row="5"  Text="{Binding EtatVoiture,  UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <UniformGrid Columns="2" Grid.ColumnSpan="2" Grid.Row="6">
+                            <Button Content="Modifier" Command="{Binding ModifierCommand}" />
+                            <Button Content="Supprimer" Grid.Column="1" Command="{Binding SupprimerCommand}"
+                            CommandParameter="{Binding ElementName=dgVoitures, Path=SelectedItem.Matricule}"/>
+                        </UniformGrid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Articles d'un Fournisseur">
+                    <UniformGrid Rows="2">
+                        <DataGrid x:Name="dg1" />
+                        <DataGrid x:Name="dg2" Margin="0,20"  />
+                    </UniformGrid>
+                </TabItem>
+            </TabControl>
+
+        </TabItem>
+
+
+
+
+
+        <TabItem Header="Gestion Clients">
+            <TabItem.DataContext>
+                <ViewModel:ClientViewModel/>
+            </TabItem.DataContext>
+
+            <TabControl>
+                <TabItem Header="Ajout Client">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Numero Client"/>
+                        <TextBox Text="{Binding NumClient,  UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                        <Label Content="Nom" Grid.Row="1"/>
+                        <TextBox Grid.Row="1" Text="{Binding NomClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Prenom" Grid.Row="2"/>
+                        <TextBox Grid.Row="2" Text="{Binding PrenomClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Adresse" Grid.Row="3"/>
+                        <TextBox Grid.Row="3" Text="{Binding AdresseClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Tel" Grid.Row="4"/>
+                        <TextBox Grid.Row="4" Text="{Binding TelClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Type" Grid.Row="5"/>
+                        <ComboBox Grid.Row="5" Grid.Column="1" Margin="10" SelectedValuePath="Content" SelectedValue="{Binding TypeClient,  UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="Personne"/>
+                            <ComboBoxItem Content="Entreprise"/>
+                        </ComboBox>
+
+
+                        <UniformGrid Columns="2" Grid.ColumnSpan="2" Grid.Row="6">
+                            <Button Content="Ajouter" Command="{Binding AjouterCommand}"/>
+                            <Button Content="Effacer" Grid.Column="1" Command="{Binding EffacerCommand}"/>
+
+                        </UniformGrid>
+                        <DataGrid Grid.Row="7" Grid.ColumnSpan="2" ItemsSource="{Binding ListeClients}" />
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Mise à jour Client">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*" />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="dgClients" Grid.ColumnSpan="2" ItemsSource="{Binding ListeClients,  UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label Content="Numero Client" Grid.Row="1"/>
+                        <TextBox Grid.Row="1" Text="{Binding NumClient,  UpdateSourceTrigger=PropertyChanged}">
+                        </TextBox>
+                        <Label Content="Nom" Grid.Row="2"/>
+                        <TextBox Grid.Row="2" Text="{Binding NomClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Prenom" Grid.Row="3"/>
+                        <TextBox Grid.Row="3" Text="{Binding PrenomClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Adresse" Grid.Row="4"/>
+                        <TextBox Grid.Row="4" Text="{Binding AdresseClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Tel" Grid.Row="5"/>
+                        <TextBox Grid.Row="5" Text="{Binding TelClient,  UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Content="Type" Grid.Row="6"/>
+                        <ComboBox Grid.Row="6" Grid.Column="1" Margin="10" SelectedValuePath="Content" SelectedValue="{Binding TypeClient,  UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="Personne"/>
+                            <ComboBoxItem Content="Entreprise"/>
+                        </ComboBox>
+                        <UniformGrid Columns="2" Grid.ColumnSpan="2" Grid.Row="7">
+                            <Button Content="Modifier" Command="{Binding ModifierCommand}" />
+                            <Button Content="Supprimer" Grid.Column="1" Command="{Binding SupprimerCommand}"
+                                    CommandParameter="{Binding ElementName=dgClients, Path=SelectedItem.Num}"/>
+                        </UniformGrid>
+
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+        </TabItem>
+
+    </TabControl>
+</Window>
